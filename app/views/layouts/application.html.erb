@@ -1,18 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Hackernews</title>
+    <title>Hacker News</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <link rel="icon" type="image/x-icon" href="https://www.hackernews.com/y18.gif">
   </head>
 
-  <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
-  </body>
+<body>
+  <div class="container">
+    <div class="navbar">
+      <div class="logo-container">
+        <img class="logo" src="https://www.hackernews.com/y18.gif" alt="Hacker News">
+      </div>
+      <div class="navlinks">
+        <b><a href="/news">Hacker News</a></b>
+        <a href="/newest">new</a> | 
+        <a href="/threads">past</a> | 
+        <a href="/comments">comments</a> |
+        <a href="/ask">ask</a> | 
+        <a href="/show">show</a> | 
+        <a href="/jobs">jobs</a> |
+        <a href="/submit">submit</a>
+      </div>
+      <div class="login">
+        <a href="/login">login</a>
+      </div>
+    </div>
+    <article>
+      <%= yield %>
+    </article>
+    </div>
+  </div>
+</body>
 </html>
