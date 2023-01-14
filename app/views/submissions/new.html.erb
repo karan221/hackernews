@@ -1,0 +1,24 @@
+<% if @submission.errors.any? %>
+  <%= @submission.errors.full_messages.to_sentence %>
+<% end %>
+
+<%= form_with model: @submission, data: { turbo: false } do |f| %>
+  <div class="field">
+    <%= f.label :title, "title" %>
+    <%= f.text_field :title, autofocus: true, autocomplete: "title" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :url, "url" %>
+    <%= f.text_field :url, autocomplete: "url" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :body, "text" %>
+    <%= f.text_area :body, autofocus: true, autocomplete: "text" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>

@@ -1,0 +1,11 @@
+<%= render @submission %>
+
+<%= form_with model: @submission do |f| %>
+  <div class="field">
+    <%= f.text_area :body, autofocus: true, autocomplete: "text" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "add comment" %>
+  </div>
+<% end %>
