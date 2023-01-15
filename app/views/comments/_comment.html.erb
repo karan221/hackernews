@@ -1,0 +1,22 @@
+<div class="submission">
+  <div class="rank">
+    <a href="/upvote">
+      <div class="votearrow"></div>
+    </a>
+  </div>
+  <div class="content">
+    <div class="subtext">
+      <%= link_to comment.user.username, user_path(comment.user) %>
+      <span class="age"><a href="/item?id=28157165">1 hour ago</a></span>
+      | <a href="/hide?id=28157165&goto=news">parent</a>
+      | <a href="/hide?id=28157165&goto=news">prev</a>
+      | <a href="/hide?id=28157165&goto=news">next</a>
+      | <button class="astext">[-]</button>
+      | <button class="astext">[more]</button>
+    </div>
+    <div class="body">
+      <p><%= comment.body %></p>
+    </div>
+    <%= link_to "reply", submission_comments_path(comment.submission)%>
+  </div>
+</div>

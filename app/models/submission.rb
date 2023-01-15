@@ -30,7 +30,7 @@ class Submission < ApplicationRecord
   validates :body, length: { maximum: 1000 }
 
   def site
-    url.match(%r{^https?://(www.)?([^/]+)/})[2]
+    url.match(%r{^https?://(www.)?([^/]+)/?})[2]
   end
 
   def rank

@@ -115,3 +115,11 @@ a:link    { color:#000000; text-decoration:none; }
   min-width: 21px;
   text-align: end;
 }
+
+.astext {
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
+  cursor: pointer;
+}

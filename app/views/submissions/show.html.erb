@@ -1,6 +1,6 @@
 <%= render @submission %>
 
-<%= form_with model: @submission do |f| %>
+<%= form_with url: submission_comments_path(@submission), data: { turbo: false } do |f| %>
   <div class="field">
     <%= f.text_area :body, autofocus: true, autocomplete: "text" %>
   </div>
@@ -9,3 +9,5 @@
     <%= f.submit "add comment" %>
   </div>
 <% end %>
+
+<%= render @submission.comments %>

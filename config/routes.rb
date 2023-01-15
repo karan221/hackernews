@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   root "submissions#index"
   resources :submissions, only: %i[index new create show]
   resources :users, only: %i[show]
+  resources :submission do 
+    resources :comments, only: %i[new, create]
+  end
 end
