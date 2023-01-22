@@ -1,8 +1,8 @@
-<% if @submission.errors.any? %>
-  <%= @submission.errors.full_messages.to_sentence %>
+<% if @item.errors.any? %>
+  <%= @item.errors.full_messages.to_sentence %>
 <% end %>
 
-<%= form_with model: @submission, data: { turbo: false } do |f| %>
+<%= form_with model: @item, data: { turbo: false } do |f| %>
   <div class="field">
     <%= f.label :title, "title" %>
     <%= f.text_field :title, autofocus: true, autocomplete: "title" %>

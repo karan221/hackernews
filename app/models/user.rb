@@ -11,6 +11,7 @@
 #  confirmed_at           :datetime
 #  email                  :string
 #  encrypted_password     :string           default(""), not null
+#  karma                  :integer          default(0), not null
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string

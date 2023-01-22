@@ -5,10 +5,10 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  root "submissions#index"
-  resources :submissions, only: %i[index new create show]
-  resources :users, only: %i[show]
-  resources :submission do 
-    resources :comments, only: %i[new, create]
+  root "items#index"
+  scope :items do
+    post "/:id/comment", to: "items#comment", as: :comment
   end
+  resources :items, only: %i[index new create show]
+  resources :users, only: %i[show]
 end

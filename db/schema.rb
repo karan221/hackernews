@@ -10,25 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_08_050142) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_21_131729) do
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.integer "user_id", null: false
-    t.integer "submission_id", null: false
+    t.string "commentable_type", null: false
+    t.integer "commentable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["submission_id"], name: "index_comments_on_submission_id"
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "submissions", force: :cascade do |t|
+  create_table "items", force: :cascade do |t|
+    t.integer "kind", default: 0, null: false
     t.string "title", default: "", null: false
     t.string "url", default: "", null: false
     t.text "body", default: "", null: false
+    t.string "ancestry"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_submissions_on_user_id"
+    t.index ["ancestry"], name: "index_items_on_ancestry"
+    t.index ["user_id"], name: "index_items_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -43,6 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_050142) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.text "bio", default: "", null: false
+    t.integer "karma", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email"
@@ -50,7 +55,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_08_050142) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "comments", "submissions"
+  create_table "votes", force: :cascade do |t|
+    t.integer "value", null: false
+    t.integer "user_id", null: false
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_votes_on_item_id"
+    t.index ["user_id", "item_id"], name: "index_votes_on_user_id_and_item_id", unique: true
+    t.index ["user_id"], name: "index_votes_on_user_id"
+  end
+
   add_foreign_key "comments", "users"
-  add_foreign_key "submissions", "users"
+  add_foreign_key "items", "users"
 end

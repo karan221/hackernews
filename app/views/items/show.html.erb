@@ -1,0 +1,13 @@
+<%= render @item %>
+
+<%= form_with model: Item, url: comment_path, method: "post" do |f| %>
+  <div class="field">
+    <%= f.text_area :body, autofocus: true, autocomplete: "text", required: true %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "add comment" %>
+  </div>
+<% end %>
+
+<%= render partial: "comment", collection: @item.descendants %>

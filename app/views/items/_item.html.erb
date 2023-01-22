@@ -1,0 +1,42 @@
+<div class="item">
+  <div class="rank">
+    <span>
+      <% if local_assigns[:rank] %>
+       <%= local_assigns[:rank] %>.
+      <% end %>
+    </span>
+    <div class="vote">
+      <a href="/upvote"></a>
+      <a href="/downvote"></a>
+    </div>
+  </div>
+  <div class="content">
+    <% if item.story? %>
+      <span class="title">
+        <a href=<%= item.url %>> <%= item.title %> </a>
+        <span class="subtext">
+          (<a href=<%="from?site=#{item.site}"%> ><span class="subtext"><%= item.site %></span></a>)
+        </span>
+      </span>
+      <div class="subtext">
+        <span class="score">1 point</span>
+        by <%= link_to item.user.username, user_path(item.user) %>
+        <span class="age"> <%= link_to time_ago_in_words(item.created_at) + " ago", item %> </span>
+        | <a href="/hide?id=28157165&goto=news">hide</a>
+        | <%= link_to pluralize(item.descendant_ids.count, 'comment'), item%>
+      </div>
+    <% end %>
+    <% if item.comment? %>
+      <span class="subtext">
+        <%= link_to item.user.username, user_path(item.user) %>
+        <span class="age"> <%= link_to time_ago_in_words(item.created_at) + " ago", item %> </span>
+        | <%= link_to "parent", item_path(item.parent_id) %>
+        | <%= link_to "context", item_path(item.root_id) + "##{item.parent_id}" %>
+        | on <%= link_to item.root.title, item_path(item.root_id) %>
+      </span>
+      <div class="body">
+        <p><%= item.body %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
