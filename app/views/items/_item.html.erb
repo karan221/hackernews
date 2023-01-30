@@ -1,13 +1,12 @@
 <div class="item">
   <div class="rank">
-    <span>
-      <% if local_assigns[:rank] %>
-       <%= local_assigns[:rank] %>.
-      <% end %>
-    </span>
-    <div class="vote">
-      <a href="/upvote"></a>
-      <a href="/downvote"></a>
+    <% if local_assigns[:rank] %>
+      <span> <%= local_assigns[:rank] %>. </span>
+    <% end %>
+    <% voted = item.voted_by?(current_user) %>
+    <div class="<%= class_names("vote", hide: voted) %>" >
+      <%= button_to "", item_upvote_path(item), method: :post %>
+      <%= button_to "", item_downvote_path(item), method: :post %>
     </div>
   </div>
   <div class="content">
@@ -19,12 +18,18 @@
         </span>
       </span>
       <div class="subtext">
-        <span class="score">1 point</span>
+        <span class="score"> <%= pluralize(item.votes.pluck(:value).sum, "point") %> </span>
         by <%= link_to item.user.username, user_path(item.user) %>
         <span class="age"> <%= link_to time_ago_in_words(item.created_at) + " ago", item %> </span>
         | <a href="/hide?id=28157165&goto=news">hide</a>
-        | <%= link_to pluralize(item.descendant_ids.count, 'comment'), item%>
+        <% if item.voted_by?(current_user) %>
+        | <%= link_to "unvote", item_unvote_path(item), data: { turbo_method: :delete } %>
+        <% end %>
+        | <%= link_to pluralize(item.descendant_ids.count, 'comment'), item %>
       </div>
+      <% if local_assigns[:show_body] %>
+        <p class="body"><%= item.body %></p>
+      <% end %>
     <% end %>
     <% if item.comment? %>
       <span class="subtext">
@@ -34,9 +39,7 @@
         | <%= link_to "context", item_path(item.root_id) + "##{item.parent_id}" %>
         | on <%= link_to item.root.title, item_path(item.root_id) %>
       </span>
-      <div class="body">
-        <p><%= item.body %></p>
-      </div>
+      <p class="body"><%= item.body %></p>
     <% end %>
   </div>
 </div>

@@ -6,9 +6,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "items#index"
-  scope :items do
-    post "/:id/comment", to: "items#comment", as: :comment
+  resources :users, only: %i[show]
+  resources :items do
+    post "/comment", to: "items#comment", as: :comment
+    post "/upvote", to: "votes#upvote", as: :upvote
+    post "/downvote", to: "votes#downvote", as: :downvote
+    delete "/unvote", to: "votes#destroy", as: :unvote
   end
   resources :items, only: %i[index new create show]
-  resources :users, only: %i[show]
 end

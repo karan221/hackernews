@@ -15,7 +15,7 @@
  */
 
 
-h1, h2, h3, h4, h5, h6, p {
+h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
@@ -25,6 +25,17 @@ a {
   line-height: 0;
 }
 
+a {
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
 body  { font-family:Verdana, Geneva, sans-serif; font-size:10pt; color:#828282; }
 
 .container { background-color: #f6f6ef;}
@@ -32,6 +43,8 @@ body  { font-family:Verdana, Geneva, sans-serif; font-size:10pt; color:#828282; 
 .navbar { font-family:Verdana, Geneva, sans-serif; font-size:10pt; color:#000000; }
 
 .subtext { font-family:Verdana, Geneva, sans-serif; font-size: 7pt; color:#828282; }
+.comment { font-family:Verdana, Geneva, sans-serif; font-size: 9pt; color: #000000 }
+.commhead { font-size: 8pt; }
 
 input    { font-family:monospace; font-size:10pt; }
 input[type=\"submit\"] { font-family:Verdana, Geneva, sans-serif; }
@@ -41,6 +54,10 @@ a:link    { color:#000000; text-decoration:none; }
 .subtext a:link, a:visited { color:#828282; text-decoration:none; }
 
 .navbar a:visited { color: #000;}
+
+.hide {
+  visibility: hidden;
+}
 
 .logo {
   border: 1px solid white;
@@ -89,7 +106,7 @@ a:link    { color:#000000; text-decoration:none; }
 }
 
 .item {
-  margin-bottom: 4px;
+  margin: 4px 0;
   display: flex;
   gap: 5px;
 }
@@ -101,21 +118,21 @@ a:link    { color:#000000; text-decoration:none; }
 .vote {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
   gap: 4px;
   margin-left: 4px;
 }
 
-.vote a {
+.vote button {
   display: block;
   width: 10px;
   height: 10px;
   background: url('grayarrow2x.gif') no-repeat;
-  background-size: contain;
+  background-size: 94%;
+  background-position: center;
 }
 
-a[href$='downvote'] { rotate: 180deg; }
+form[action$='downvote'] { rotate: 180deg; }
 
 .subtext a:hover {
   text-decoration: underline;
@@ -133,3 +150,17 @@ a[href$='downvote'] { rotate: 180deg; }
   padding:0;
   cursor: pointer;
 }
+
+.body, .comment {
+  white-space: pre-wrap;
+}
+
+.comment {
+  margin: 4px 0;
+}
+
+.subtext a.reply:link, a.reply:visited { color:#000000; text-decoration:underline; }
+
+details > summary { list-style: none; }
+details[open] > summary > .toggleShow { display: none; }
+details:not([open]) > summary > .toggleHide { display: none; }

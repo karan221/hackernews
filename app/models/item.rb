@@ -32,11 +32,11 @@ class Item < ApplicationRecord
 
   belongs_to :user
 
-  has_many :votes, as: :voteable, dependent: :destroy
+  has_many :votes, dependent: :destroy
 
   validates :title, length: { maximum: 100 }
   # validates :url, format: { with: URL_REGEX, message: "must be a valid URL" }
-  validates :body, length: { maximum: 1000 }
+  validates :body, length: { maximum: 5000 }
 
   def site
     url.match(%r{^https?://(www.)?([^/]+)/?})[2]
@@ -44,5 +44,17 @@ class Item < ApplicationRecord
 
   def rank
     id
+  end
+
+  def voted_by?(user)
+    votes.exists?(user:)
+  end
+
+  def left_right_sibling_ids
+    sibling_ids = self.sibling_ids
+    index = sibling_ids.index(id)
+    left = sibling_ids[index - 1] if index.positive?
+    right = sibling_ids[index + 1]
+    [left, right]
   end
 end

@@ -1,22 +1,35 @@
-<div class="item">
-  <div class="rank">
-    <a href="/upvote">
-      <div class="votearrow"></div>
-    </a>
+<div class="item" id=<%=comment.id%>>
+    <% voted = comment.voted_by?(current_user) %>
+  <div class="<%= class_names("rank", hide: voted) %>">
+    <div class="vote">
+      <%= button_to "", item_upvote_path(comment), method: :post %>
+      <%# <%= button_to "", item_downvote_path(comment), method: :post %>
+    </div>
   </div>
-  <div class="content">
-    <div class="subtext">
+  <details open>
+    <summary class="subtext commhead">
       <%= link_to comment.user.username, user_path(comment.user) %>
-      <span class="age"><a href="/item?id=28157165">1 hour ago</a></span>
-      | <a href="/hide?id=28157165&goto=news">parent</a>
-      | <a href="/hide?id=28157165&goto=news">prev</a>
-      | <a href="/hide?id=28157165&goto=news">next</a>
-      | <button class="astext">[-]</button>
-      | <button class="astext">[more]</button>
-    </div>
-    <div class="body">
-      <p><%= comment.body %></p>
-    </div>
-    <%= link_to "reply", comment %>
-  </div>
+      <span class="age"> <%= link_to time_ago_in_words(comment.created_at) + " ago", comment %> </span>
+      <% if voted %>
+      | <%= link_to "unvote", item_unvote_path(comment), data: { turbo_method: :delete } %>
+      <% end %>
+      <% if comment.parent_id != comment.root_id %>
+      | <a href="#<%=comment.parent_id%>">parent</a>
+      <% end %>
+      <% left_sibling, right_sibling = comment.left_right_sibling_ids %>
+      <% if left_sibling %>
+      | <a href="#<%=left_sibling%>">prev</a>
+      <% end %>
+      <% if right_sibling %>
+      | <a href="#<%=right_sibling%>"></a>
+      <% end %>
+      <a class="toggleHide">[-]</a>
+      <a class="toggleShow">[<%=comment.subtree_ids.count%> more]</a>
+    </summary>
+    <p class="comment"><%= comment.body %></p>
+    <span class="subtext">
+      <%= link_to "reply", item_path(comment), class: "reply" %>
+    </span>
+    <%= render partial: "comment", collection: comment.children %>
+  </details>
 </div>

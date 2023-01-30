@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: votes
@@ -19,4 +21,7 @@
 class Vote < ApplicationRecord
   belongs_to :user
   belongs_to :item
+
+  validates :item, uniqueness: { value: true, scope: :user, message: 'has already been voted on' }
+  validates :value, inclusion: { in: [-1, 1] }
 end

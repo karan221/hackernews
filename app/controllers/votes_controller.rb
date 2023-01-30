@@ -3,26 +3,30 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
 
-  def create
-    @vote = Vote.new(vote_params)
-    @vote.user = current_user
-
+  def upvote
+    @vote = Vote.new(item_id: params[:item_id], user_id: current_user.id, value: 1)
     if @vote.save
-      redirect_to @vote.voteable
+      redirect_back(fallback_location: root_path) #, notice: 'Upvoted!')
     else
-      redirect_to @vote.voteable, alert: 'You have already voted'
+      redirect_back(fallback_location: root_path, alert: @vote.errors.full_messages.to_sentence)
     end
   end
 
-  def upvote
-  end
-
   def downvote
+    @vote = Vote.new(item_id: params[:item_id], user_id: current_user.id, value: -1)
+    if @vote.save
+      redirect_back(fallback_location: root_path) #, notice: 'Downvoted!')
+    else
+      redirect_back(fallback_location: root_path, alert: @vote.errors.full_messages.to_sentence)
+    end
   end
 
-  private
-
-  def vote_params
-    params.permit(:score, :type, :id)
+  def destroy
+    @vote = Vote.find_by(item_id: params[:item_id], user_id: current_user.id)
+    if @vote.destroy
+      redirect_back(fallback_location: root_path) #, notice: 'Unvoted!')
+    else
+      redirect_back(fallback_location: root_path, alert: @vote.errors.full_messages.to_sentence)
+    end
   end
 end

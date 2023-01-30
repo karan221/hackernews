@@ -33,8 +33,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :submissions, dependent: :destroy
-  has_many :comments, dependent: :destroy
+  has_many :items, dependent: :destroy
+  has_many :votes, dependent: :destroy
 
   def email_required?
     false

@@ -1,13 +1,16 @@
-<%= render @item %>
+<%= render @item, show_body: true %>
 
-<%= form_with model: Item, url: comment_path, method: "post" do |f| %>
-  <div class="field">
-    <%= f.text_area :body, autofocus: true, autocomplete: "text", required: true %>
-  </div>
+<div class="item">
+  <div style="width: 14px;"></div>
+  <%= form_with model: Item, url: item_comment_path(@item), method: :post do |f| %>
+    <div class="field">
+      <%= f.text_area :body, autofocus: true, autocomplete: "text", required: true %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "add comment" %>
-  </div>
-<% end %>
+    <div class="actions">
+      <%= f.submit "add comment" %>
+    </div>
+  <% end %>
+</div>
 
-<%= render partial: "comment", collection: @item.descendants %>
+<%= render partial: "comment", collection: @item.children %>

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create]
+  before_action :authenticate_user!, except: %i[index show]
 
   def index
-    @items = Item.story.limit(30)
+    @items = Item.story.includes(:votes).limit(30)
   end
 
   def show
@@ -28,14 +28,14 @@ class ItemsController < ApplicationController
   end
 
   def comment
-    @comment = Item.children_of(params[:id]).new(item_params)
+    @comment = Item.children_of(params[:item_id]).new(item_params)
     @comment.kind = :comment
     @comment.user = current_user
 
     if @comment.save
-      redirect_to @comment.parent
+      redirect_back(fallback_location: root_path)
     else
-      render :show
+      redirect_back(fallback_location: root_path, alert: 'Comment could not be saved')
     end
   end
 
