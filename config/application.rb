@@ -16,7 +16,17 @@ module Hackernews
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    config.time_zone = "Kolkata"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.generators do |g|
+      g.test_framework(
+        :rspec,
+        fixtures: true,
+        routing_specs: false,
+        helper_scpecs: false,
+      )
+      g.fixture_replacement :factory_bot
+    end
   end
 end

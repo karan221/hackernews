@@ -55,6 +55,8 @@ group :development, :test do
   gem 'rubocop-rails', require: false
   gem 'rubocop-performance', require: false
   gem 'rubocop-rspec', require: false
+
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -77,6 +79,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
+  gem "rspec-rails"
 end
 
 gem 'devise'
