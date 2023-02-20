@@ -38,6 +38,8 @@ RUN sudo -u postgres -H -- psql -c "ALTER ROLE root WITH PASSWORD 'password';"
 # Copy your rails app into the runner
 COPY . .
 
+SECRET ENV RAILS_MASTER_KEY
+
 # run migrations
 RUN bundle install
 RUN bin/rails db:migrate
