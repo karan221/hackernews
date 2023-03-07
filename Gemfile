@@ -62,8 +62,8 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-  gem "debase", "~> 0.2.5.beta2", require: false
-  gem "ruby-debug-ide", require: false
+  # gem "debase", "~> 0.2.5.beta2", require: false
+  # gem "ruby-debug-ide", require: false
   gem 'annotate'
 
   gem 'byebug'

@@ -37,3 +37,5 @@
 vendor/bundle
 
 .byebug_history
+
+.vscode
